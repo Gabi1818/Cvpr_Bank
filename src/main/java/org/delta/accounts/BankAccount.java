@@ -28,4 +28,8 @@ public class BankAccount {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+
+    public void getInfo(){
+        System.out.println("Account Number: " + accountNumber + " Balance: " + balance + " Owner: " + owner.getName());
+    }
 }

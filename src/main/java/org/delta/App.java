@@ -1,35 +1,36 @@
 package org.delta;
 
 import org.delta.accounts.BankAccount;
+import org.delta.accounts.BankAccountFactory;
 import org.delta.accounts.MoneyTransferService;
 import org.delta.persons.Owner;
+import org.delta.persons.OwnerFactory;
 
 public class App {
-    public void run(){
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.println("Hello and welcome!");
-
-        //Calc calc = new Calculator();
-        //calc.div(10,0);
-
+    public void run() throws Exception {
         TestBank();
     }
 
-    private void TestBank(){
+
+    private void TestBank() throws Exception {
         MoneyTransferService moneyTransferService = new MoneyTransferService();
+        OwnerFactory ownerFactory = new OwnerFactory();
+        BankAccountFactory bankAccountFactory = new BankAccountFactory();
 
-        Owner owner = new Owner("Gabi", "J");
-        BankAccount bankAccount = new BankAccount("123", 500, owner);
+        Owner owner = ownerFactory.CreateOwner("Gabi", "J", "0");
 
-        System.out.println(owner.getName());
-        System.out.println(bankAccount.getBalance());
 
-        bankAccount.setBalance(500 + 100);
-        bankAccount.setBalance(500 - 200);
+        BankAccount bankAccount = bankAccountFactory.CreateStudentBankAccount(500, owner, "not expired");
+        BankAccount bankAccount2 = bankAccountFactory.CreateBankAccount(2500, owner);
 
-        moneyTransferService.addMoneyToBankAccount(bankAccount, 500);
+        bankAccount.getInfo();
+        bankAccount2.getInfo();
 
+        moneyTransferService.TransferMoneyBetweenAccounts(bankAccount2, bankAccount, 500);
+
+
+        bankAccount.getInfo();
+        bankAccount2.getInfo();
 
     }
 
