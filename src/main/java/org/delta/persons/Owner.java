@@ -18,4 +18,8 @@ public class Owner {
     public String getSurname() {
         return surname;
     }
+
+    public String getId() {
+        return id;
+    }
 }

@@ -1,36 +1,65 @@
 package org.delta;
 
-import org.delta.accounts.BankAccount;
-import org.delta.accounts.BankAccountFactory;
-import org.delta.accounts.MoneyTransferService;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import org.delta.accounts.*;
+import org.delta.accounts.cards.BankCardFactory;
 import org.delta.persons.Owner;
 import org.delta.persons.OwnerFactory;
+import org.delta.persons.PersonJsonSerializationService;
+import org.delta.persons.PersonalIDValidator;
 
 public class App {
+    @Inject
+    private BankAccountNumberGeneratorService bankAccountNumberGenerator;
+
+    @Inject
+    private MoneyTransferFeeCalculator transferFeeCalculator;
+
+    @Inject
+    private PersonalIDValidator personIdValidator;
+
+    @Inject
+    private MoneyTransferService moneyTransferService;
+
+    @Inject
+    private OwnerFactory ownerFactory;
+
+    @Inject
+    private BankAccountFactory bankAccountFactory;
+
+    @Inject
+    private PersonJsonSerializationService personJsonSerializationService;
+
+
     public void run() throws Exception {
         TestBank();
     }
 
 
     private void TestBank() throws Exception {
-        MoneyTransferService moneyTransferService = new MoneyTransferService();
-        OwnerFactory ownerFactory = new OwnerFactory();
-        BankAccountFactory bankAccountFactory = new BankAccountFactory();
 
-        Owner owner = ownerFactory.CreateOwner("Gabi", "J", "0");
+        Owner owner = this.ownerFactory.CreateOwner("Gabi", "J", "0");
+
+        System.out.println(this.personJsonSerializationService.SerializeOwner(owner));
+
+        /*
+        BankAccount bankAccount = this.bankAccountFactory.CreateStudentBankAccount(500, owner, "not expired");
+         */
+        BankAccount bankAccount2 = this.bankAccountFactory.CreateBankAccount(2500, owner);
 
 
-        BankAccount bankAccount = bankAccountFactory.CreateStudentBankAccount(500, owner, "not expired");
-        BankAccount bankAccount2 = bankAccountFactory.CreateBankAccount(2500, owner);
-
-        bankAccount.getInfo();
+        bankAccount2.assignNewCard();
+        bankAccount2.assignNewCard();
         bankAccount2.getInfo();
 
-        moneyTransferService.TransferMoneyBetweenAccounts(bankAccount2, bankAccount, 500);
-
-
+        /*
         bankAccount.getInfo();
         bankAccount2.getInfo();
+        this.moneyTransferService.TransferMoneyBetweenAccounts(bankAccount2, bankAccount, 500);
+        bankAccount.getInfo();
+        bankAccount2.getInfo();
+        */
 
     }
 

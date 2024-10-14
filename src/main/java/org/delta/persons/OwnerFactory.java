@@ -1,12 +1,17 @@
 package org.delta.persons;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import org.delta.accounts.AccountNumberGenerator;
+
+@Singleton
 public class OwnerFactory {
 
-    private final PersonalIDValidator personIDValidator;
+    @Inject
+    private PersonalIDValidator personIDValidator;
 
-    public OwnerFactory(){
-        this.personIDValidator = new PersonalIDValidator();
-    }
+    @Inject
+    private AccountNumberGenerator accountNumberGenerator;
 
     public Owner CreateOwner(String firstName, String lastName, String id) throws Exception {
 

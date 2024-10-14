@@ -1,12 +1,15 @@
 package org.delta.accounts;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import org.delta.persons.OwnerFactory;
+
+@Singleton
 public class MoneyTransferService {
 
+    @Inject
     private MoneyTransferFeeCalculator moneyTransferFeeCalculator;
 
-    public MoneyTransferService(){
-        this.moneyTransferFeeCalculator = new MoneyTransferFeeCalculator();
-    }
 
     public void addMoneyToBankAccount(BankAccount account, double amount){
         double currentBalance = account.getBalance();

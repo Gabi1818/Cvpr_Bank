@@ -1,6 +1,9 @@
 package org.delta.persons;
 
-public class PersonalIDValidator {
+import com.google.inject.Singleton;
+
+@Singleton
+public class PersonalIDValidator implements IPersonalIDValidator{
     public boolean IsPersonalIDValid(String personalID) {
         return true;
     }

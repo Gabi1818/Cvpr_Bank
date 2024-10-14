@@ -1,5 +1,8 @@
 package org.delta.accounts;
 
+import com.google.inject.Singleton;
+
+@Singleton
 public class MoneyTransferFeeCalculator {
 
     private static double ADD_MONEY_FEE = 10;

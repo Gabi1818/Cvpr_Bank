@@ -1,6 +1,9 @@
 package org.delta.accounts;
 
-public class BankAccountNumberGeneratorService {
+import com.google.inject.Singleton;
+
+@Singleton
+public class BankAccountNumberGeneratorService implements  AccountNumberGenerator{
     private int lastNumber;
 
     public BankAccountNumberGeneratorService() {
