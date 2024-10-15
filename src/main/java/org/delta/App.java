@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import org.delta.accounts.*;
 import org.delta.accounts.cards.BankCard;
 import org.delta.accounts.cards.BankCardFactory;
+import org.delta.atm.ATMService;
 import org.delta.persons.Owner;
 import org.delta.persons.OwnerFactory;
 import org.delta.persons.PersonJsonSerializationService;
@@ -34,6 +35,9 @@ public class App {
     @Inject
     private BankCardFactory bankCardFactory;
 
+    @Inject
+    private ATMService atmService;
+
 
     public void run() throws Exception {
         TestBank();
@@ -50,12 +54,14 @@ public class App {
          */
 
         BankAccount bankAccount = this.bankAccountFacade.CreateBankAccount(owner, 2500);
+        BankCard bankCard = bankCardFactory.createBankCard(bankAccount);
 
-        BankCard bankCard = bankCardFactory.CreateBankCard();
-        bankAccount.assignNewCard(bankCard);
+        bankAccount.getInfo();
 
-        bankCard = bankCardFactory.CreateBankCard();
-        bankAccount.assignNewCard(bankCard);
+        String cardNumber = bankCard.getNumber();
+        String pin = bankCard.getPin();
+
+        atmService.getMoneyFromCard(cardNumber, pin, 200);
         bankAccount.getInfo();
 
         /*
