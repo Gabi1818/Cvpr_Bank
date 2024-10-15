@@ -3,6 +3,7 @@ package org.delta;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.delta.accounts.*;
+import org.delta.accounts.cards.BankCard;
 import org.delta.accounts.cards.BankCardFactory;
 import org.delta.persons.Owner;
 import org.delta.persons.OwnerFactory;
@@ -31,6 +32,9 @@ public class App {
     @Inject
     private PersonJsonSerializationService personJsonSerializationService;
 
+    @Inject
+    private BankCardFactory bankCardFactory;
+
 
     public void run() throws Exception {
         TestBank();
@@ -41,16 +45,18 @@ public class App {
 
         Owner owner = this.ownerFactory.CreateOwner("Gabi", "J", "0");
 
-        System.out.println(this.personJsonSerializationService.SerializeOwner(owner));
-
         /*
+        System.out.println(this.personJsonSerializationService.SerializeOwner(owner));
         BankAccount bankAccount = this.bankAccountFactory.CreateStudentBankAccount(500, owner, "not expired");
          */
+
         BankAccount bankAccount2 = this.bankAccountFactory.CreateBankAccount(2500, owner);
 
+        BankCard bankCard = bankCardFactory.createBankCard();
+        bankAccount2.assignNewCard(bankCard);
 
-        bankAccount2.assignNewCard();
-        bankAccount2.assignNewCard();
+        bankCard = bankCardFactory.createBankCard();
+        bankAccount2.assignNewCard(bankCard);
         bankAccount2.getInfo();
 
         /*

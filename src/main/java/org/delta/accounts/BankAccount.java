@@ -15,8 +15,7 @@ public class BankAccount {
 
     private Map<String, BankCard> cardsInMap;
 
-    @Inject
-    private BankCardFactory bankCardFactory;
+
 
     public BankAccount(String accountNumber, double balance, Owner owner) {
         this.accountNumber = accountNumber;
@@ -60,8 +59,7 @@ public class BankAccount {
         return cardsInMap.size();
     }
 
-    public void assignNewCard(){
-        BankCard bankCard = bankCardFactory.createBankCard();
+    public void assignNewCard(BankCard bankCard){
         cardsInMap.put(bankCard.getNumber(), bankCard);
     }
 
