@@ -16,7 +16,6 @@ public class BankAccount {
     private Map<String, BankCard> cardsInMap;
 
 
-
     public BankAccount(String accountNumber, double balance, Owner owner) {
         this.accountNumber = accountNumber;
         this.balance = balance;

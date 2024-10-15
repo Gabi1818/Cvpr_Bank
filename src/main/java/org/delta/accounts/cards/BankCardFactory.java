@@ -14,7 +14,7 @@ public class BankCardFactory {
     @Inject
     BankCardPinGenerator bankCardPinGenerator;
 
-    public BankCard createBankCard() {
+    public BankCard CreateBankCard() {
         return new BankCard(cardNumberGenerator.Generate(), bankCardPinGenerator.Generate());
     }
 }

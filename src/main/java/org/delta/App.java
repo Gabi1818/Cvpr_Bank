@@ -1,7 +1,6 @@
 package org.delta;
 
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import org.delta.accounts.*;
 import org.delta.accounts.cards.BankCard;
 import org.delta.accounts.cards.BankCardFactory;
@@ -27,7 +26,7 @@ public class App {
     private OwnerFactory ownerFactory;
 
     @Inject
-    private BankAccountFactory bankAccountFactory;
+    private BankAccountFacade bankAccountFacade;
 
     @Inject
     private PersonJsonSerializationService personJsonSerializationService;
@@ -50,14 +49,14 @@ public class App {
         BankAccount bankAccount = this.bankAccountFactory.CreateStudentBankAccount(500, owner, "not expired");
          */
 
-        BankAccount bankAccount2 = this.bankAccountFactory.CreateBankAccount(2500, owner);
+        BankAccount bankAccount = this.bankAccountFacade.CreateBankAccount(owner, 2500);
 
-        BankCard bankCard = bankCardFactory.createBankCard();
-        bankAccount2.assignNewCard(bankCard);
+        BankCard bankCard = bankCardFactory.CreateBankCard();
+        bankAccount.assignNewCard(bankCard);
 
-        bankCard = bankCardFactory.createBankCard();
-        bankAccount2.assignNewCard(bankCard);
-        bankAccount2.getInfo();
+        bankCard = bankCardFactory.CreateBankCard();
+        bankAccount.assignNewCard(bankCard);
+        bankAccount.getInfo();
 
         /*
         bankAccount.getInfo();

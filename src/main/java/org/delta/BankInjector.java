@@ -10,6 +10,5 @@ public class BankInjector extends AbstractModule {
     @Override
     protected void configure() {
         this.bind(AccountNumberGenerator.class).to(SlovakiaAccountNumberGenerator.class);
-        this.bind(BankCardFactory.class);
     }
 }
