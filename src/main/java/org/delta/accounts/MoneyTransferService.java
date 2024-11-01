@@ -11,14 +11,22 @@ public class MoneyTransferService {
     private MoneyTransferFeeCalculator moneyTransferFeeCalculator;
 
 
-    public void addMoneyToBankAccount(BankAccount account, double amount){
-        double currentBalance = account.getBalance();
-        currentBalance -= moneyTransferFeeCalculator.calculateFee(amount);
+    public void addMoneyToBankAccount(BankAccount account, double amount) {
+        double balance = account.getBalance();
+        double fee = this.moneyTransferFeeCalculator.calculateFee(amount);
+        double newBalance = balance + amount - fee;
+        account.setBalance(newBalance);
     }
 
-    public void removeMoneyFromBankAccount(BankAccount account, double amount){
+    public void removeMoneyFromBankAccount(BankAccount account, double amount) throws Exception {
         double currentBalance = account.getBalance();
-        account.setBalance(currentBalance - amount);
+
+        if (currentBalance >= amount){
+            account.setBalance(currentBalance - amount);
+        }
+        else{
+            throw new Exception("Not enough money.");
+        }
     }
 
 

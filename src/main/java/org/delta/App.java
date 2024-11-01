@@ -5,24 +5,11 @@ import org.delta.accounts.*;
 import org.delta.accounts.cards.BankCard;
 import org.delta.accounts.cards.BankCardFactory;
 import org.delta.atm.ATMService;
+import org.delta.interesting.InterestingService;
 import org.delta.persons.Owner;
 import org.delta.persons.OwnerFactory;
-import org.delta.persons.PersonJsonSerializationService;
-import org.delta.persons.PersonalIDValidator;
 
 public class App {
-    @Inject
-    private BankAccountNumberGeneratorService bankAccountNumberGenerator;
-
-    @Inject
-    private MoneyTransferFeeCalculator transferFeeCalculator;
-
-    @Inject
-    private PersonalIDValidator personIdValidator;
-
-    @Inject
-    private MoneyTransferService moneyTransferService;
-
     @Inject
     private OwnerFactory ownerFactory;
 
@@ -30,13 +17,13 @@ public class App {
     private BankAccountFacade bankAccountFacade;
 
     @Inject
-    private PersonJsonSerializationService personJsonSerializationService;
-
-    @Inject
     private BankCardFactory bankCardFactory;
 
     @Inject
     private ATMService atmService;
+
+    @Inject
+    InterestingService interestingService;
 
 
     public void run() throws Exception {
@@ -53,16 +40,24 @@ public class App {
         BankAccount bankAccount = this.bankAccountFactory.CreateStudentBankAccount(500, owner, "not expired");
          */
 
-        BankAccount bankAccount = this.bankAccountFacade.CreateBankAccount(owner, 2500);
+        BankAccount bankAccount = this.bankAccountFacade.createBankAccount(owner, 2500);
         BankCard bankCard = bankCardFactory.createBankCard(bankAccount);
-
         bankAccount.getInfo();
 
+        BankAccount bankAccount2 = this.bankAccountFacade.createSavingBankAccount(owner, 2500);
+        bankAccount2.getInfo();
+
+        interestingService.addInterestToBankAccounts();
+        bankAccount.getInfo();
+        bankAccount2.getInfo();
+
+        /*
         String cardNumber = bankCard.getNumber();
         String pin = bankCard.getPin();
 
         atmService.getMoneyFromCard(cardNumber, pin, 200);
         bankAccount.getInfo();
+        */
 
         /*
         bankAccount.getInfo();

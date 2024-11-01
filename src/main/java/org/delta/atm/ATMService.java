@@ -26,29 +26,24 @@ public class ATMService {
         if (card.getPin() != pin)
             throw new Exception("Invalid pin.");
 
-        if (owner.getBalance() >= money){
-            moneyTransferService.removeMoneyFromBankAccount(owner, money);
-        }
+        moneyTransferService.removeMoneyFromBankAccount(owner, money);
     }
 
-    public void getMoneyFromCardToOtherAccount(String cardNumber, String pin, int money, String receivingAccountNumber) throws Exception {
+    public void getMoneyFromCardToOtherAccount(String cardNumber, String pin, double money, String receivingAccountNumber) throws Exception {
         BankCard card = findBankCard(cardNumber);
         BankAccount owner = card.getOwner();
 
         if (card.getPin() != pin)
             throw new Exception("Invalid pin.");
 
-        if (owner.getBalance() >= money){
-            moneyTransferService.removeMoneyFromBankAccount(owner, money);
-        }
+        moneyTransferService.removeMoneyFromBankAccount(owner, money);
 
         BankAccount receivingAccount = findBankAccount(receivingAccountNumber);
-
         moneyTransferService.addMoneyToBankAccount(receivingAccount, money);
     }
 
     private BankCard findBankCard(String cardNumber) throws Exception {
-        List<BankAccount> bankAccountList = bankAccountFacade.GetBankAccounts();
+        List<BankAccount> bankAccountList = bankAccountFacade.getBankAccounts();
         BankCard card = null;
 
         for (BankAccount bankAccount : bankAccountList) {
@@ -66,7 +61,7 @@ public class ATMService {
     }
 
     private BankAccount findBankAccount(String accountNumber) throws Exception {
-        List<BankAccount> bankAccountList = bankAccountFacade.GetBankAccounts();
+        List<BankAccount> bankAccountList = bankAccountFacade.getBankAccounts();
         String currentAccountNumber;
 
         for (BankAccount bankAccount : bankAccountList) {

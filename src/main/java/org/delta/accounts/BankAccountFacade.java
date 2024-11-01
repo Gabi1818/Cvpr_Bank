@@ -16,19 +16,26 @@ public class BankAccountFacade {
     BankAccountFactory bankAccountFactory;
 
 
-    public BankAccount CreateBankAccount(Owner owner, int balance) {
-        BankAccount bankAccount = this.bankAccountFactory.CreateBankAccount(balance, owner);
+    public BankAccount createBankAccount(Owner owner, int balance) {
+        BankAccount bankAccount = this.bankAccountFactory.createBankAccount(balance, owner);
+        this.bankAccounts.add(bankAccount);
+        return bankAccount;
+    }
+
+    public BankAccount createStudentBankAccount(Owner owner, int balance, String expired) {
+        BankAccount bankAccount = this.bankAccountFactory.createStudentBankAccount(balance, owner, expired);
         this.bankAccounts.add(bankAccount);
         return  bankAccount;
     }
 
-    public BankAccount CreateStudentBankAccount(Owner owner, int balance, String expired) {
-        BankAccount bankAccount = this.bankAccountFactory.CreateStudentBankAccount(balance, owner, expired);
-        this.bankAccounts.add(bankAccount);
-        return  bankAccount;
+    public BankAccount createSavingBankAccount(Owner owner, double balance) {
+        BankAccount account = this.bankAccountFactory.createSavingBankAccount(owner, balance);
+        this.bankAccounts.add(account);
+
+        return account;
     }
 
-    public List<BankAccount> GetBankAccounts() {
+    public List<BankAccount> getBankAccounts() {
         return this.bankAccounts;
     }
 }
