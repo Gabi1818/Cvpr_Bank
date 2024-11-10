@@ -6,6 +6,8 @@ import org.delta.accounts.cards.BankCard;
 import org.delta.accounts.cards.BankCardFactory;
 import org.delta.atm.ATMService;
 import org.delta.interesting.InterestingService;
+import org.delta.investments.InvestmentGrowthCalculator;
+import org.delta.investments.InvestmentService;
 import org.delta.persons.Owner;
 import org.delta.persons.OwnerFactory;
 
@@ -25,6 +27,12 @@ public class App {
     @Inject
     InterestingService interestingService;
 
+    @Inject
+    InvestmentGrowthCalculator investmentGrowthCalculator;
+
+    @Inject
+    InvestmentService investmentService;
+
 
     public void run() throws Exception {
         TestBank();
@@ -40,16 +48,22 @@ public class App {
         BankAccount bankAccount = this.bankAccountFactory.CreateStudentBankAccount(500, owner, "not expired");
          */
 
-        BankAccount bankAccount = this.bankAccountFacade.createBankAccount(owner, 2500);
-        BankCard bankCard = bankCardFactory.createBankCard(bankAccount);
+        BankAccount bankAccount = this.bankAccountFacade.createInvestmentBankAccount(owner, 2500, 3);
         bankAccount.getInfo();
 
+        investmentGrowthCalculator.assignRandomInvestmentGrowth();
+        investmentService.addInvestmentToBankAccounts();
+
+        bankAccount.getInfo();
+
+        /*
         BankAccount bankAccount2 = this.bankAccountFacade.createSavingBankAccount(owner, 2500);
         bankAccount2.getInfo();
 
         interestingService.addInterestToBankAccounts();
         bankAccount.getInfo();
         bankAccount2.getInfo();
+         */
 
         /*
         String cardNumber = bankCard.getNumber();

@@ -2,6 +2,7 @@ package org.delta.accounts;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import org.delta.investments.InvestmentsFacade;
 import org.delta.persons.Owner;
 
 import java.util.LinkedList;
@@ -14,6 +15,9 @@ public class BankAccountFacade {
 
     @Inject
     BankAccountFactory bankAccountFactory;
+
+    @Inject
+    InvestmentsFacade investmentsFacade;
 
 
     public BankAccount createBankAccount(Owner owner, int balance) {
@@ -30,6 +34,14 @@ public class BankAccountFacade {
 
     public BankAccount createSavingBankAccount(Owner owner, double balance) {
         BankAccount account = this.bankAccountFactory.createSavingBankAccount(owner, balance);
+        this.bankAccounts.add(account);
+
+        return account;
+    }
+
+    public BankAccount createInvestmentBankAccount(Owner owner, double balance, int numberOfInvestments) {
+        BankAccount account = this.bankAccountFactory.createInvestmnetBankAccount(owner, balance);
+        investmentsFacade.createNewInvestments(numberOfInvestments, account);
         this.bankAccounts.add(account);
 
         return account;
