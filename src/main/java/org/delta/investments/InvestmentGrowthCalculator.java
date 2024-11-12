@@ -11,13 +11,15 @@ public class InvestmentGrowthCalculator {
     @Inject
     InvestmentsFacade investmentsFacade;
 
-    List<Investment> investments = investmentsFacade.getInvestments();
+
 
     public void assignRandomInvestmentGrowth() {
         Random random = new Random();
 
         int minGrowth = -10;
         int maxGrowth = 20;
+
+        List<Investment> investments = investmentsFacade.getInvestments();
 
         for (Investment investment : investments) {
             int randomGrowth = random.nextInt(maxGrowth - minGrowth + 1) + minGrowth;

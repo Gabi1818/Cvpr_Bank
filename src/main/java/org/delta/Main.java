@@ -14,6 +14,7 @@ public class Main {
             app.run();
         }
         catch(Exception e){
+            System.out.println("test");
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
