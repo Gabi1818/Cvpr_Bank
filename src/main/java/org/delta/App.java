@@ -41,7 +41,7 @@ public class App {
 
     private void TestBank() throws Exception {
 
-        Owner owner = this.ownerFactory.CreateOwner("Gabi", "J", "0");
+        Owner owner = this.ownerFactory.createOwner("Gabi", "J", "0");
 
         /*
         System.out.println(this.personJsonSerializationService.SerializeOwner(owner));

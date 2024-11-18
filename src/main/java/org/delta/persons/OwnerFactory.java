@@ -13,7 +13,7 @@ public class OwnerFactory {
     @Inject
     private AccountNumberGenerator accountNumberGenerator;
 
-    public Owner CreateOwner(String firstName, String lastName, String id) throws Exception {
+    public Owner createOwner(String firstName, String lastName, String id) throws Exception {
 
         if (!this.personIDValidator.IsPersonalIDValid((id))){
             throw new Exception("Id not valid.");

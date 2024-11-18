@@ -31,7 +31,6 @@ public class InvestmentService {
                 double money = bankAccount.getBalance();
 
                 moneyToAdd = investmentCalculator.calculateMoneyToAdd(investment, money);
-                System.out.println("Money to add:" + moneyToAdd);
 
                 moneyTransferService.addMoneyToBankAccount(bankAccount, moneyToAdd);
             }

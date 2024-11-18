@@ -35,7 +35,7 @@ public class BankAccountFactory {
         return new SavingBankAccount(balance, owner, accountNumber);
     }
 
-    public BankAccount createInvestmnetBankAccount(Owner owner, double balance) {
+    public BankAccount createInvestmentBankAccount(Owner owner, double balance) {
         String accountNumber = bankAccountNumberGeneratorService.GenerateAccountNumber();
         return new InvestmentBankAccount(accountNumber, balance, owner);
     }

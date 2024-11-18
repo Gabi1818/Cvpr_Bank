@@ -40,7 +40,7 @@ public class BankAccountFacade {
     }
 
     public BankAccount createInvestmentBankAccount(Owner owner, double balance, int numberOfInvestments) {
-        BankAccount account = this.bankAccountFactory.createInvestmnetBankAccount(owner, balance);
+        BankAccount account = this.bankAccountFactory.createInvestmentBankAccount(owner, balance);
         investmentsFacade.createNewInvestments(numberOfInvestments, account);
         this.bankAccounts.add(account);
 

@@ -11,8 +11,6 @@ public class InvestmentGrowthCalculator {
     @Inject
     InvestmentsFacade investmentsFacade;
 
-
-
     public void assignRandomInvestmentGrowth() {
         Random random = new Random();
 

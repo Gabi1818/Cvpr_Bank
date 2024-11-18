@@ -45,7 +45,6 @@ public class InterestingService {
             }
 
             double moneyToAdd = interestingCalculator.calculateMoneyAdded(bankAccount, interestFactor);
-            System.out.println("Money to add:" + moneyToAdd);
 
             moneyTransferService.addMoneyToBankAccount(bankAccount, moneyToAdd);
         }
