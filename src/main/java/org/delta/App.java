@@ -8,6 +8,9 @@ import org.delta.atm.ATMService;
 import org.delta.interesting.InterestingService;
 import org.delta.investments.InvestmentGrowthCalculator;
 import org.delta.investments.InvestmentService;
+import org.delta.observer.Observer;
+import org.delta.observer.example.MyTopic;
+import org.delta.observer.example.MyTopicSubscriber;
 import org.delta.persons.Owner;
 import org.delta.persons.OwnerFactory;
 
@@ -44,10 +47,14 @@ public class App {
         Owner owner = this.ownerFactory.createOwner("Gabi", "J", "0");
 
         /*
+        //Serialization
         System.out.println(this.personJsonSerializationService.SerializeOwner(owner));
         BankAccount bankAccount = this.bankAccountFactory.CreateStudentBankAccount(500, owner, "not expired");
          */
 
+
+        /*
+        //Investment
         BankAccount bankAccount = this.bankAccountFacade.createInvestmentBankAccount(owner, 2500, 3);
         bankAccount.getInfo();
 
@@ -55,6 +62,8 @@ public class App {
         investmentService.addInvestmentToBankAccounts();
 
         bankAccount.getInfo();
+         */
+
 
         /*
         BankAccount bankAccount2 = this.bankAccountFacade.createSavingBankAccount(owner, 2500);
@@ -73,7 +82,9 @@ public class App {
         bankAccount.getInfo();
         */
 
+
         /*
+        //Money transfer
         bankAccount.getInfo();
         bankAccount2.getInfo();
         this.moneyTransferService.TransferMoneyBetweenAccounts(bankAccount2, bankAccount, 500);
@@ -81,6 +92,21 @@ public class App {
         bankAccount2.getInfo();
         */
 
+
+        //Observer test
+        MyTopic topic = new MyTopic();
+
+        Observer myTopicSubscriber1 = new MyTopicSubscriber("Obj1");
+        Observer myTopicSubscriber2 = new MyTopicSubscriber("Obj2");
+        Observer myTopicSubscriber3 = new MyTopicSubscriber("Obj3");
+
+        topic.register(myTopicSubscriber1);
+        topic.register(myTopicSubscriber2);
+        topic.register(myTopicSubscriber3);
+
+        myTopicSubscriber1.update();
+
+        topic.postMessage("New message");
     }
 
     private void TestFor(){
