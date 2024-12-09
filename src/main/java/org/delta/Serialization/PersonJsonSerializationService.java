@@ -1,4 +1,6 @@
-package org.delta.persons;
+package org.delta.Serialization;
+
+import org.delta.persons.Owner;
 
 public class PersonJsonSerializationService {
 

@@ -1,6 +1,7 @@
 package org.delta;
 
 import com.google.inject.Inject;
+import org.delta.Serialization.BankSerializationService;
 import org.delta.accounts.*;
 import org.delta.accounts.cards.BankCard;
 import org.delta.accounts.cards.BankCardFactory;
@@ -13,6 +14,9 @@ import org.delta.observer.example.MyTopic;
 import org.delta.observer.example.MyTopicSubscriber;
 import org.delta.persons.Owner;
 import org.delta.persons.OwnerFactory;
+import org.delta.Serialization.PersonJsonSerializationService;
+
+import java.util.List;
 
 public class App {
     @Inject
@@ -36,6 +40,15 @@ public class App {
     @Inject
     InvestmentService investmentService;
 
+    @Inject
+    PersonJsonSerializationService personJsonSerializationService;
+
+    @Inject
+    MoneyTransferService moneyTransferService;
+
+    @Inject
+    BankSerializationService bankSerializationService;
+
 
     public void run() throws Exception {
         TestBank();
@@ -45,68 +58,66 @@ public class App {
     private void TestBank() throws Exception {
 
         Owner owner = this.ownerFactory.createOwner("Gabi", "J", "0");
+        BankAccount bankAccount = this.bankAccountFacade.createBankAccount(owner, 500);
+        BankAccount bankAccount2 = this.bankAccountFacade.createBankAccount(owner, 1500);
 
-        /*
+
         //Serialization
         System.out.println(this.personJsonSerializationService.SerializeOwner(owner));
-        BankAccount bankAccount = this.bankAccountFactory.CreateStudentBankAccount(500, owner, "not expired");
-         */
 
+        //Student Bank Account
+        BankAccount bankAccountStudent = this.bankAccountFacade.createStudentBankAccount(owner, 500, "not expired");
 
-        /*
         //Investment
-        BankAccount bankAccount = this.bankAccountFacade.createInvestmentBankAccount(owner, 2500, 3);
-        bankAccount.getInfo();
-
+        BankAccount bankAccountInvestment = this.bankAccountFacade.createInvestmentBankAccount(owner, 2500, 3);
+        bankAccountInvestment.getInfo();
         investmentGrowthCalculator.assignRandomInvestmentGrowth();
         investmentService.addInvestmentToBankAccounts();
+        bankAccountInvestment.getInfo();
 
-        bankAccount.getInfo();
-         */
-
-
-        /*
-        BankAccount bankAccount2 = this.bankAccountFacade.createSavingBankAccount(owner, 2500);
-        bankAccount2.getInfo();
-
+        //Saving Bank Account
+        BankAccount bankAccountSaving = this.bankAccountFacade.createSavingBankAccount(owner, 2500);
+        bankAccountSaving.getInfo();
         interestingService.addInterestToBankAccounts();
-        bankAccount.getInfo();
-        bankAccount2.getInfo();
-         */
+        bankAccountSaving.getInfo();
 
-        /*
+        //Cards
+        BankCard bankCard = this.bankCardFactory.createBankCard(bankAccount);
+        bankAccount.assignNewCard(bankCard);
         String cardNumber = bankCard.getNumber();
         String pin = bankCard.getPin();
 
+        //ATM + card
         atmService.getMoneyFromCard(cardNumber, pin, 200);
         bankAccount.getInfo();
-        */
 
-
-        /*
         //Money transfer
         bankAccount.getInfo();
         bankAccount2.getInfo();
         this.moneyTransferService.TransferMoneyBetweenAccounts(bankAccount2, bankAccount, 500);
         bankAccount.getInfo();
         bankAccount2.getInfo();
-        */
-
 
         //Observer test
         MyTopic topic = new MyTopic();
-
         Observer myTopicSubscriber1 = new MyTopicSubscriber("Obj1");
         Observer myTopicSubscriber2 = new MyTopicSubscriber("Obj2");
         Observer myTopicSubscriber3 = new MyTopicSubscriber("Obj3");
-
         topic.register(myTopicSubscriber1);
         topic.register(myTopicSubscriber2);
         topic.register(myTopicSubscriber3);
-
         myTopicSubscriber1.update();
-
         topic.postMessage("New message");
+
+        //Bank Serialization
+        List<BankAccount> bankAccountList = bankAccountFacade.getBankAccounts();
+        System.out.println(bankAccountList.size());
+
+
+        String serializedData = bankSerializationService.runSerialization(bankAccountFacade.getBankAccounts());
+        String filePath = "bankFiles.json";
+        bankSerializationService.save(filePath, serializedData);
+
     }
 
     private void TestFor(){

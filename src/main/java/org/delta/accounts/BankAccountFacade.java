@@ -11,13 +11,17 @@ import java.util.List;
 @Singleton
 public class BankAccountFacade {
 
-    private List<BankAccount> bankAccounts = new LinkedList<BankAccount>();
+    private List<BankAccount> bankAccounts= new LinkedList<BankAccount>();
 
     @Inject
     BankAccountFactory bankAccountFactory;
 
     @Inject
     InvestmentsFacade investmentsFacade;
+
+    BankAccountFacade(){
+        bankAccounts = new LinkedList<BankAccount>();
+    }
 
 
     public BankAccount createBankAccount(Owner owner, int balance) {
